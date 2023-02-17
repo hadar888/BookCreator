@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-
-const API_KEY = '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';
+import apiKey from './ApiKey';
 
 const mainCharacterAnimal = 'turtle';
 const mainCharacterName = 'yosi';
@@ -12,8 +11,8 @@ const storyLocation = "space";
 const moral = "frienship";
 const extra_moral = 'be a good boy';
 
-const sumurizeLabel = "Summary of the Story:";
-const sumrizePointLabel = "*";
+const sumurizeLabel = "Summary of the Story: \n";
+const sumrizePointLabel = "* ";
 
 const stroyReq = `write a story for ${kidAge} years old kids, 
 where the main character is ${mainCharacterAnimal}
@@ -21,12 +20,14 @@ and his name is ${mainCharacterName},
 the story is occurs in ${storyLocation},
 and the moral of the story is ${moral} and ${extra_moral}.
 the story must have twist.
-At the end sumrize the main parts of the story in list of points after label of "${sumurizeLabel},
-each point in sparte line with ${sumrizePointLabel} at the start of the line"`;
+At the end sumrize the each line of the story in list of points after label of "${sumurizeLabel},
+each point in sparte line with ${sumrizePointLabel} at the start of the line,
+each point should stand alone and be able to desribe in one image,
+any line should not include names"`;
 
 const headers = {
   'Content-Type': 'application/json',
-  'Authorization': `Bearer ${API_KEY}`
+  'Authorization': `Bearer ${apiKey}`
 };
 
 const GPT3params = {
@@ -72,10 +73,12 @@ function App() {
   }, []);
 
   useEffect(()=>{
-    const storySumIndex = story.indexOf(sumurizeLabel);
-    const summary = story.substring(storySumIndex + sumurizeLabel.length);
-    const storyPoints = summary.split("*");
-    console.log("storyPoints: ", storyPoints);
+    if (story !== "") {
+      const storySumIndex = story.indexOf(sumurizeLabel);
+      const summary = story.substring(storySumIndex + sumurizeLabel.length);
+      const storyPoints = summary.split(sumrizePointLabel);
+      console.log("storyPoints: ", storyPoints);
+    }
   },[story])
 
   return (
