@@ -1,44 +1,21 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import BookImage from "./BookImage";
-import headers from "./headers";
-import { BookImageInfo } from "./models/Imges";
+import { StoryPart } from "./models/Story";
 
 interface BookImagesContainerProps {
-    storyPoints: string[];
+    storyParts: StoryPart[];
 }
 
 const BookImagesContainer = (props: BookImagesContainerProps) => {
-    const { storyPoints } = props;
-    const [storyImages, setStoryImages] = useState<BookImageInfo[]>([]);
-
-    useEffect(() => {
-        const storyImagesInitial = [];
-        storyPoints.map((storyPoint: string) => {
-            const imageParams = {
-                prompt: `${storyPoint} as drawing art for kids`,
-                model: 'image-alpha-001'
-            };
-
-            axios.post('https://api.openai.com/v1/images/generations', imageParams, { headers: headers })
-                .then(response => {
-                    console.log(response.data);
-                    storyImagesInitial.push(response.data.data[0].url);
-                })
-                .catch(error => {
-                    console.log(error);
-            });
-        });
-    }, []);
+    const { storyParts } = props;
 
     return (
         <>
             {
-                storyImages.map((storyImage) => {
+                storyParts.map((storyPart) => {
                     return (
                         <BookImage
-                            bookImageUrl={storyImage.imageUrl}
-                            imageText={storyImage.description}
+                            bookImageUrl={storyPart.image}
+                            imageText={storyPart.text}
                         />
                     )
                 })

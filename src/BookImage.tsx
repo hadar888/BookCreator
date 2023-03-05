@@ -1,7 +1,6 @@
 import './App.css';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
-import clsx from 'clsx';
 
 interface BookImagesCreatorProps {
     isCoverImage?: boolean;
