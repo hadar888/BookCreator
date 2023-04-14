@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import BookImage from "./BookImage";
 import loader from './loader.json';
 import headers from './headers';
-import { IconButton } from "@mui/material";
-import {NavigateNext} from '@mui/icons-material';
+import { Grid, IconButton } from "@mui/material";
+import { NavigateNext } from '@mui/icons-material';
 
 interface ImageCoverContainerProps {
     mainCharacterAnimal: string,
@@ -13,7 +13,7 @@ interface ImageCoverContainerProps {
 }
 
 const ImageCoverContainer = (props: ImageCoverContainerProps) => {
-    const {mainCharacterAnimal, storyLocation} = props;
+    const { mainCharacterAnimal, storyLocation } = props;
     const [coverImage, setCoverImage] = useState<string>();
 
     useEffect(() => {
@@ -31,21 +31,25 @@ const ImageCoverContainer = (props: ImageCoverContainerProps) => {
         //         console.log(error);
         //     });
 
-        const response = {data: [{url: 'https://www.eckersleys.com.au/media/wysiwyg/blog/Projects/Images/How_to_draw/How_to_draw_dog_colour_Preview.jpg'}]}
+        const response = { data: [{ url: 'https://www.eckersleys.com.au/media/wysiwyg/blog/Projects/Images/How_to_draw/How_to_draw_dog_colour_Preview.jpg' }] }
         setCoverImage(response.data[0].url);
 
     }, [mainCharacterAnimal, storyLocation])
 
     return (
-        <>
-            {
-                coverImage ? <BookImage bookImageUrl={coverImage} imageText={"sdsds"} isCoverImage /> :
-                    <Lottie animationData={loader} loop={true} />
-            }
-            <IconButton aria-label="next">
-                <NavigateNextIcon />
-            </IconButton>
-        </>
+        <Grid container >
+            <Grid item>
+                {
+                    coverImage ? <BookImage bookImageUrl={coverImage} imageText={"sdsds"} isCoverImage /> :
+                        <Lottie animationData={loader} loop={true} />
+                }
+            </Grid>
+            <Grid item>
+                <IconButton aria-label="next">
+                    <NavigateNext />
+                </IconButton>
+            </Grid>
+        </Grid>
     )
 }
 

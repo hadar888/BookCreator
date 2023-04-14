@@ -1,6 +1,7 @@
 .App {
   min-height: 100vh;
-  background-color: #282c34;
+  background-color: #d5dae3;
+  padding: 20px;
 }
 
 .Book-cover {

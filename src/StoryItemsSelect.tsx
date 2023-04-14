@@ -1,5 +1,20 @@
 import { Grid, MenuItem, Select, TextField } from "@mui/material";
 
+const animalesOptions = ["Dog", "Cat", "Bear", "Elephant", "Monkey", "Lion", "Rabbit", "Mouse", "Duck",
+    "Frog", "Bird", "Fish", "Pig", "Horse", "Snake", "Turtle", "Wolf", "Fox", "Giraffe", "Kangaroo"];
+
+const placesOptions = ["Forest", "Jungle", "Ocean", "Castle", "Farm", "Zoo", "Beach", "Park", "Desert",
+    "Mountains", "City", "Space", "Underwater", "Island", "School", "Circus", "Fairyland", "Enchanted forest",
+    "Woods", "Garden"];
+
+const moralsOptions = ["Treat others how you want to be treated", "Honesty is the best policy",
+    "Kindness goes a long way", "Never give up on your dreams", "Actions speak louder than words",
+    "Good things come to those who wait", "You reap what you sow", "Be true to yourself",
+    "Sharing is caring", "Beauty is only skin deep", "Forgive and forget", "Listen to your elders",
+    "Hard work pays off", "Friends come in all shapes and sizes", "Practice makes perfect",
+    "The journey is often more important than the destination", "You can't please everyone",
+    "Believe in yourself", "Never stop learning", "Don't judge a book by its cover"];
+
 interface StoryItemsSelectProps {
     kidAge: number,
     setKidAge: (value: number) => void,
@@ -22,94 +37,108 @@ const StoryItemsSelect = (props: StoryItemsSelectProps) => {
         extraMoral, setExtraMoral } = props;
 
     const changeKidAgeHandle = (event: any) => {
-        setKidAge(event.target.value);    
+        setKidAge(event.target.value);
     };
 
     const changeMainCharacterAnimalHandle = (event: any) => {
-        setMainCharacterAnimal(event.target.value);    
+        setMainCharacterAnimal(event.target.value);
     };
 
     const changeMainCharacterNameHandle = (event: any) => {
-        setMainCharacterName(event.target.value);    
+        setMainCharacterName(event.target.value);
     };
 
     const changeStoryLocationHandle = (event: any) => {
-        setStoryLocation(event.target.value);    
+        setStoryLocation(event.target.value);
     };
 
     const changeMoralHandle = (event: any) => {
-        setMoral(event.target.value);    
+        setMoral(event.target.value);
     };
 
     const changeExtraMoralHandle = (event: any) => {
-        setExtraMoral(event.target.value);    
+        setExtraMoral(event.target.value);
     };
 
     return (
         <>
-            <Grid container direction="column" alignItems="center">
-                <Grid item container direction="column" alignItems="center">
-                    <Grid item>
-                        <TextField
-                            value={kidAge}
-                            onChange={changeKidAgeHandle}
-                            label="Kid age"
-                            type="number"
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <Select
-                            onChange={changeMainCharacterAnimalHandle}
-                            value={mainCharacterAnimal}
-                        >
-                            <MenuItem value={"Turtle"}>Turtle</MenuItem>
-                            <MenuItem value={"Lion"}>Lion</MenuItem>
-                            <MenuItem value={"Rabit"}>Rabit</MenuItem>
-                        </Select>
-                    </Grid>
-                    <Grid item>
-                        <TextField
-                            required
-                            label="Main character name"
-                            value={mainCharacterName}
-                            onChange={changeMainCharacterNameHandle}
-                        />
+            <Grid container direction="column" alignItems="baseline" spacing={3}>
+                <Grid item>
+                    <Grid container direction="row" alignItems="center" spacing={3}>
+                        <Grid item>
+                            <TextField
+                                value={kidAge}
+                                onChange={changeKidAgeHandle}
+                                label="Kid age"
+                                type="number"
+                                inputProps={{ min: 3, max: 8 }}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <Select
+                                onChange={changeMainCharacterAnimalHandle}
+                                value={mainCharacterAnimal}
+                            >
+                                {
+                                    animalesOptions.map((animal) =>
+                                        <MenuItem value={animal}>{animal}</MenuItem>
+                                    )
+                                }
+                            </Select>
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                required
+                                label="Main character name"
+                                value={mainCharacterName}
+                                onChange={changeMainCharacterNameHandle}
+                            />
+                        </Grid>
                     </Grid>
                 </Grid>
-
-                <Grid item container direction="column" alignItems="center">
-                    <Grid item>
-                        <Select
-                            onChange={changeStoryLocationHandle}
-                            value={storyLocation}
-                        >
-                            <MenuItem value={"Space"}>Space</MenuItem>
-                            <MenuItem value={"Forest"}>Forest</MenuItem>
-                            <MenuItem value={"A lone island"}>A lone island</MenuItem>
-                        </Select>
-                    </Grid>
-                    <Grid item>
-                        <Select
-                            onChange={changeMoralHandle}
-                            value={moral}
-                        >
-                            <MenuItem value={"Friendship"}>Friendship</MenuItem>
-                            <MenuItem value={"Respect your perents"}>Respect your perents</MenuItem>
-                            <MenuItem value={"Lisen to your heart"}>Lisen to your heart</MenuItem>
-                        </Select>
-                    </Grid>
-                    <Grid item>
-                        <Select
-                            onChange={changeExtraMoralHandle}
-                            value={extraMoral}
-                        >
-                            <MenuItem value={"Friendship"}>Friendship</MenuItem>
-                            <MenuItem value={"Respect your perents"}>Respect your perents</MenuItem>
-                            <MenuItem value={"Lisen to your heart"}>Lisen to your heart</MenuItem>
-                        </Select>
+                <Grid item>
+                    <Grid container direction="row" alignItems="center" spacing={3}>
+                        <Grid item>
+                            <Select
+                                onChange={changeStoryLocationHandle}
+                                value={storyLocation}
+                            >
+                                {
+                                    placesOptions.map((place) =>
+                                        <MenuItem value={place}>{place}</MenuItem>
+                                    )
+                                }
+                            </Select>
+                        </Grid>
+                        <Grid item>
+                            <Select
+                                onChange={changeMoralHandle}
+                                value={moral}
+                            >
+                                {
+                                    moralsOptions.filter((moral) => extraMoral !== moral)
+                                    .map((moral) =>
+                                        <MenuItem value={moral}>{moral}</MenuItem>
+                                    )
+                                }
+                            </Select>
+                        </Grid>
+                        <Grid item>
+                            <Select
+                                onChange={changeExtraMoralHandle}
+                                value={extraMoral}
+                            >
+                                {
+                                    moralsOptions.filter((extraMoral) => extraMoral !== moral)
+                                    .map((extraMoral) =>
+                                        <MenuItem value={extraMoral}>{extraMoral}</MenuItem>
+                                    )
+                                }
+                            </Select>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
